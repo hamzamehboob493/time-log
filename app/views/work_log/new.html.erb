@@ -1,0 +1,37 @@
+<%= form_with(model: @work_log, url: '/work_log?', method: :post, html: { class: "max-w-sm mx-auto" }, scope: :work_log) do |form| %>
+  <% if @work_log.errors.any? %>
+    <div id="work-log-errors" class="bg-red-300 rounded-md border border-red-500 py-3 px-2 mt-2 text-red-800 relative" data-controller="application">
+      <h2><%= pluralize(@work_log.errors.count, "error") %> prohibited this work log from being saved:</h2>
+      <span class="absolute top-0 bottom-0 right-0 px-4 py-3" data-action="click->application#handleFlashClick" data-application-id-param="work-log-errors">
+      <svg class="fill-current h-6 w-6 text-red-500" role="button" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><title>Close</title><path d="M14.348 14.849a1.2 1.2 0 0 1-1.697 0L10 11.819l-2.651 3.029a1.2 1.2 0 1 1-1.697-1.697l2.758-3.15-2.759-3.152a1.2 1.2 0 1 1 1.697-1.697L10 8.183l2.651-3.031a1.2 1.2 0 1 1 1.697 1.697l-2.758 3.152 2.758 3.15a1.2 1.2 0 0 1 0 1.698z"/></svg>
+      </span>
+      <ul>
+        <% @work_log.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="flex flex-col space-y-3 mt-5">
+    <div>
+      <%= form.label :lecture_id, class: "block mb-2 text-sm font-medium text-gray-900" %>
+      <%= form.collection_select :lecture_id, Lecture.all, :id, :title, { prompt: 'Select Lecture' }, class: 'border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500' %>
+    </div>
+
+    <div>
+      <%= form.label :start_time, class: "block mb-2 text-sm font-medium text-gray-900" %>
+      <%= form.datetime_field :start_time, class: 'border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500' %>
+    </div>
+
+    <div>
+      <%= form.label :end_time, class: "block mb-2 text-sm font-medium text-gray-900" %>
+      <%= form.datetime_field :end_time, class: 'border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500' %>
+    </div>
+
+
+
+    <div class="actions">
+      <%= form.submit "Create Work Log", class: "cursor-pointer w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800" %>
+    </div>
+  </div>
+<% end %>

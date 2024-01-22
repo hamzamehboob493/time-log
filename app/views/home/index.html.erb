@@ -1,0 +1,33 @@
+<div class="mt-5">
+  <span class="text-sm text-gray-900">Displaying work logs for user:</span> &quot;<em><%= current_user.username %></em>&quot;
+  <div>Total Time Logged in current month: <span><%= current_user.current_month_logged_time %> Hrs</span></div>
+  <div class="mt-4">
+    <%= month_calendar(events: @work_logs) do |date, work_logs| %>
+      <div class="flex flex-row items-center justify-between">
+        <div>
+          <%= date.strftime("%B %d, %Y") %>
+        </div>
+        <% unless date.future? %>
+        <div data-controller="application">
+          <button
+            class="w-6 h-6 rounded-full shadow-md bg-green-100"
+            data-action="click->application#handleWorkLogAddClick"
+            data-application-date-param="<%= date %>"
+          >
+            <%= link_to "+", new_work_log_path(date: date) %>
+          </button>
+        </div>
+      <% end %>
+      </div>
+      <div class="flex flex-col">
+        <% work_logs.each do |log| %>
+          <div><%= log.start_time.to_time.strftime("%I:%M %p") %>
+            - <%= log.end_time.to_time.strftime("%I:%M %p") %></div>
+        <% end %>
+      </div>
+      <div>
+
+      </div>
+    <% end %>
+  </div>
+</div>
